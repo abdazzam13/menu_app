@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.test.menu_app.model.meal_by_category.MealByCategory
+import com.test.menu_app.model.meal_detail.MealDetail
 import com.test.menu_app.model.menu_category.MenuCategory
 import com.test.menu_app.model.repository.ApiRepository
 import com.test.menu_app.utils.Constants
@@ -20,6 +21,9 @@ class MenuViewModel: ViewModel() {
 
     private val _mealByCategory = MutableLiveData<MealByCategory>()
     val mealByCategory: LiveData<MealByCategory> = _mealByCategory
+
+    private val _mealDetail = MutableLiveData<MealDetail>()
+    val mealDetail: LiveData<MealDetail> = _mealDetail
 
     fun fetchMenuCategory(){
         viewModelScope.launch {
@@ -38,7 +42,19 @@ class MenuViewModel: ViewModel() {
                 val mealByCat = repository.getMealByCategory(category)
                 _mealByCategory.value = mealByCat
             } catch (e: Exception){
-                Log.d(Constants.TAG.MENU_VIEWMODEL_TAG, "fetchMenuCategory exception: ${e.message}")
+                Log.e(Constants.TAG.MENU_VIEWMODEL_TAG, "fetchMealByCategory exception: ${e.message}")
+            }
+        }
+    }
+
+    fun fetchMealDetail(id: String){
+        viewModelScope.launch {
+            try {
+                val mealDetail = repository.getMealRecipe(id)
+                _mealDetail.value = mealDetail
+                Log.d("menuviewmodel","mealDetailXYZ = $mealDetail")
+            } catch (e: Exception){
+                Log.e(Constants.TAG.MENU_VIEWMODEL_TAG, "fetchMealDetail exception: ${e.message}")
             }
         }
     }

@@ -6,19 +6,35 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.test.menu_app.view.MealByCategoryScreen
 import com.test.menu_app.view.MealCategoryScreen
+import com.test.menu_app.view.MealDetail
+import com.test.menu_app.view.MealDetailScreen
 import com.test.menu_app.viewmodel.MenuViewModel
 
 @Composable
-fun AppNavigation(menuViewModel: MenuViewModel){
+fun AppNavigation(menuViewModel: MenuViewModel) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Routes.mealCategory ){
+    NavHost(navController = navController, startDestination = Routes.mealCategory) {
         composable(Routes.mealCategory) {
-                MealCategoryScreen(menuViewModel = menuViewModel, navController = navController)
+            MealCategoryScreen(menuViewModel = menuViewModel, navController = navController)
         }
         composable(Routes.mealByCategory + "/{category}") {
             val category = it.arguments?.getString("category")
             if (category != null) {
-                MealByCategoryScreen(menuViewModel = menuViewModel,category = category,  navController = navController)
+                MealByCategoryScreen(
+                    menuViewModel = menuViewModel,
+                    category = category,
+                    navController = navController
+                )
+            }
+        }
+        composable(Routes.mealDetail + "/{id}") {
+            val id = it.arguments?.getString("id")
+            if (id != null) {
+                MealDetailScreen(
+                    navController = navController,
+                    menuViewModel = menuViewModel,
+                    id = id
+                )
             }
         }
     }

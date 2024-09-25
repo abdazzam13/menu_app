@@ -4,11 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,37 +21,43 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.test.menu_app.model.menu_category.Category
+import com.test.menu_app.model.meal_by_category.Meals
 import com.test.menu_app.utils.Routes
 import com.test.menu_app.view.components.AppBar
 import com.test.menu_app.view.components.Loading
 import com.test.menu_app.viewmodel.MenuViewModel
 
+
 @Composable
-fun MealCategoryScreen(menuViewModel: MenuViewModel, navController: NavController) {
+fun MealByCategoryScreen(
+    menuViewModel: MenuViewModel,
+    category: String,
+    navController: NavController
+) {
     Column() {
-        AppBar("Food Category")
-        ListMenuCategory(viewModel = menuViewModel, navController = navController)
+        AppBar(name = category)
+        ListMeal(viewModel = menuViewModel, category = category, navController = navController)
     }
 }
 
 @Composable
-fun ListMenuCategory(viewModel: MenuViewModel, navController: NavController) {
-    val menuCategories by viewModel.menuCategories.observeAsState()
+fun ListMeal(viewModel: MenuViewModel, category: String, navController: NavController) {
+    val meal by viewModel.mealByCategory.observeAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.fetchMenuCategory()
+        viewModel.fetchMealByCategory(category)
     }
-    if (menuCategories?.categories.isNullOrEmpty()) {
+    if (meal?.meals.isNullOrEmpty()) {
         Loading()
     } else {
-        var categories = menuCategories?.categories as List<Category>
-        categories.let {
-            LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp)) {
+        var meals = meal?.meals as List<Meals>
+        meals.let {
+            LazyColumn {
                 items(it) {
-                    ItemMenuCategory(
-                        name = it.strCategory,
-                        url = it.strCategoryThumb,
+                    ItemMeal(
+                        id = it.idMeal,
+                        name = it.strMeal,
+                        url = it.strMealThumb,
                         navController = navController
                     )
                 }
@@ -58,27 +65,30 @@ fun ListMenuCategory(viewModel: MenuViewModel, navController: NavController) {
         }
     }
 }
+
 @Composable
-fun ItemMenuCategory(
+fun ItemMeal(
+    id: String,
     name: String,
     url: String,
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
-    Column(
+    Row(
         modifier = Modifier
             .padding(16.dp)
             .clickable {
-                navController.navigate(Routes.mealByCategory + "/$name")
+                navController.navigate(Routes.mealDetail + "/$id")
             },
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             painter = rememberAsyncImagePainter(url),
-            contentDescription = "Category: $name",
+            contentDescription = "Meal: $name",
             modifier = Modifier.size(128.dp)
         )
+        Spacer(modifier = Modifier.padding(10.dp))
         Text(
             text = name,
             modifier = modifier,
@@ -86,3 +96,6 @@ fun ItemMenuCategory(
         )
     }
 }
+
+
+

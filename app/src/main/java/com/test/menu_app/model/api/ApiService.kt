@@ -1,6 +1,7 @@
 package com.test.menu_app.model.api
 
 import com.test.menu_app.model.meal_by_category.MealByCategory
+import com.test.menu_app.model.meal_detail.MealDetail
 import com.test.menu_app.model.menu_category.MenuCategory
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -12,4 +13,6 @@ interface ApiService {
 
     @GET("filter.php?")
     suspend fun getMealByCategory(@Query("c") category: String): MealByCategory
+    @GET("lookup.php?")
+    suspend fun getMealRecipe(@Query("i") id: String): MealDetail
 }
