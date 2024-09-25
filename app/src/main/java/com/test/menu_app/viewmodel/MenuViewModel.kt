@@ -13,8 +13,7 @@ import com.test.menu_app.utils.Constants
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class MenuViewModel: ViewModel() {
-    private val repository = ApiRepository()
+class MenuViewModel(private val repository: ApiRepository): ViewModel() {
 
     private val _menuCategories = MutableLiveData<MenuCategory>()
     val menuCategories: LiveData<MenuCategory> = _menuCategories
@@ -31,7 +30,7 @@ class MenuViewModel: ViewModel() {
               val menuCat = repository.getCategory()
               _menuCategories.value = menuCat
             } catch (e: Exception){
-                Log.d(Constants.TAG.MENU_VIEWMODEL_TAG, "fetchMenuCategory exception: ${e.message}")
+                Log.e(Constants.TAG.MENU_VIEWMODEL_TAG, "fetchMenuCategory exception: ${e.message}")
             }
         }
     }
@@ -52,7 +51,6 @@ class MenuViewModel: ViewModel() {
             try {
                 val mealDetail = repository.getMealRecipe(id)
                 _mealDetail.value = mealDetail
-                Log.d("menuviewmodel","mealDetailXYZ = $mealDetail")
             } catch (e: Exception){
                 Log.e(Constants.TAG.MENU_VIEWMODEL_TAG, "fetchMealDetail exception: ${e.message}")
             }

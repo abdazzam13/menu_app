@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Menu App</string>
+    <string name="category">Category: %1$s</string>
+    <string name="nation">Nation: %1$s</string>
+    <string name="recipe">Recipe</string>
+    <string name="cooking_instructions">Cooking Instructions</string>
+    <string name="loading">Loading...</string>
+    <string name="food_category">Food Category</string>
+    <string name="meal_detail">Meal Detail</string>
 </resources>

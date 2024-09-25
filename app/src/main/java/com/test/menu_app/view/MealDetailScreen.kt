@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.test.menu_app.R
 import com.test.menu_app.model.meal_detail.MealRecipe
 import com.test.menu_app.utils.Routes
 import com.test.menu_app.view.components.AppBar
@@ -41,7 +43,7 @@ import com.test.menu_app.viewmodel.MenuViewModel
 fun MealDetailScreen(navController: NavController, menuViewModel: MenuViewModel, id: String) {
     Column(
     ) {
-        AppBar(name = "Meal Detail")
+        AppBar(name = stringResource(R.string.meal_detail))
         MealDetail(viewModel = menuViewModel, id = id)
     }
 }
@@ -91,11 +93,11 @@ fun MealImageandDesc(mealRecipe: MealRecipe) {
         Spacer(modifier = Modifier.padding(10.dp))
         Row {
             Text(
-                text = "Category: ${mealRecipe.strCategory}"
+                text = stringResource(R.string.category, mealRecipe.strCategory)
             )
             Spacer(modifier = Modifier.padding(5.dp))
             Text(
-                text = "Nation: ${mealRecipe.strArea}"
+                text = stringResource(R.string.nation, mealRecipe.strArea)
             )
         }
     }
@@ -153,7 +155,7 @@ fun Recipe(mealRecipe: MealRecipe) {
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "Recipe",
+            text = stringResource(R.string.recipe),
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp
         )
@@ -170,7 +172,7 @@ fun Recipe(mealRecipe: MealRecipe) {
 fun CookingInstruction(mealRecipe: MealRecipe) {
     Column {
         Text(
-            text = "Cooking Instructions",
+            text = stringResource(R.string.cooking_instructions),
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp
         )

@@ -77,5 +77,6 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
     implementation("androidx.media3:media3-exoplayer:1.2.0")
     implementation("androidx.media3:media3-ui:1.2.0")
-    "implementation" ("com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0")
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0")
+    implementation ("io.insert-koin:koin-androidx-compose:3.2.0")
 }

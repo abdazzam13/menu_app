@@ -26,16 +26,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.test.menu_app.dependency_injection.appModule
 import com.test.menu_app.model.menu_category.Category
 import com.test.menu_app.utils.AppNavigation
 import com.test.menu_app.viewmodel.MenuViewModel
+import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.compose.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: MenuViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startKoin {
+            androidContext(this@MainActivity)
+            modules(appModule)
+        }
         setContent {
-            AppNavigation(viewModel)
+            val menuViewModel = getViewModel<MenuViewModel>()
+            AppNavigation(menuViewModel)
         }
     }
 }

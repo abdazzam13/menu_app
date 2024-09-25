@@ -20,10 +20,6 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 @Composable
 fun VideoPlayer(url: String) {
-    // Get the current context
-    val context = LocalContext.current
-
-    Log.d("VIDEOPLAYER", "URL: $url")
     var id = url.split("=")[1]
 
     val ctx = LocalContext.current
